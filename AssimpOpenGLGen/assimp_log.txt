@@ -1,0 +1,50 @@
+Info,  T1008: Load mocap_convo.dae
+Info,  T1008: Found a matching importer for this file format
+Info,  T1008: Import root directory is '.\'
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Head-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_CircleSpine-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Shoulder-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_FaceJaw-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_CircleChest-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_FootIK-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_CrownHips-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Ball025-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Master-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_RevFoot-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Jaw-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Breast_L-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_HandIK-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Circle025-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Hand-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_UpLid-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Knuckle-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Toe-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Breast_R-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Cube025-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_RevToe-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Foot-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Neck-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Root-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Gaze-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_LoLid-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_Tongue-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_FaceHead-mesh>.
+Warn,  T1008: Collada: No material specified for subgroup <> in geometry <GZM_CircleHips-mesh>.
+Info,  T1008: Entering post processing pipeline
+Info,  T1008: RemoveRedundantMatsProcess finished. Removed 0 redundant and 4 unused materials.
+Warn,  T1008: Found 6 degenerated primitives
+Skipping one or more lines with the same contents
+Info,  T1008: Points: 3, Lines: 29, Triangles: 5, Polygons: 0 (Meshes, X = removed)
+Warn,  T1008: Simplified dummy tracks with just one key
+Skipping one or more lines with the same contents
+Info,  T1008: Normal vectors are undefined for line and point meshes
+Skipping one or more lines with the same contents
+Info,  T1008: Tangents are undefined for line and point meshes
+Skipping one or more lines with the same contents
+Info,  T1008: CalcTangentsProcess finished. Tangents have been calculated
+Info,  T1008: JoinVerticesProcess finished | Verts in: 108578 out: 57085 | ~47.4%
+Info,  T1008: Removed 78 weights. Input bones: 16. Output bones: 16
+Error, T1008: This algorithm works on triangle meshes only
+Skipping one or more lines with the same contents
+Info,  T1008: Cache relevant are 5 meshes (35788 faces). Average output ACMR is 1.704789
+Info,  T1008: Leaving post processing pipeline

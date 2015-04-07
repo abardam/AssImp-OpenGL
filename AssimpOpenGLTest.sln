@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssimpOpenGLTest", "AssimpOpenGLTest\AssimpOpenGLTest.vcxproj", "{B61FFE06-5714-492B-9BA3-5CD8D45931D3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssimpOpenGLViewer", "AssimpOpenGLViewer\AssimpOpenGLViewer.vcxproj", "{DB030E53-D72F-4534-A1B9-ACBB65C6F5F8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B61FFE06-5714-492B-9BA3-5CD8D45931D3} = {B61FFE06-5714-492B-9BA3-5CD8D45931D3}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AssimpOpenGLGen", "AssimpOpenGLGen\AssimpOpenGLGen.vcxproj", "{FCF8EA67-7583-4FC9-AFC6-36B7DA41B612}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B61FFE06-5714-492B-9BA3-5CD8D45931D3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B61FFE06-5714-492B-9BA3-5CD8D45931D3}.Debug|Win32.Build.0 = Debug|Win32
+		{B61FFE06-5714-492B-9BA3-5CD8D45931D3}.Release|Win32.ActiveCfg = Release|Win32
+		{B61FFE06-5714-492B-9BA3-5CD8D45931D3}.Release|Win32.Build.0 = Release|Win32
+		{DB030E53-D72F-4534-A1B9-ACBB65C6F5F8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DB030E53-D72F-4534-A1B9-ACBB65C6F5F8}.Debug|Win32.Build.0 = Debug|Win32
+		{DB030E53-D72F-4534-A1B9-ACBB65C6F5F8}.Release|Win32.ActiveCfg = Release|Win32
+		{DB030E53-D72F-4534-A1B9-ACBB65C6F5F8}.Release|Win32.Build.0 = Release|Win32
+		{FCF8EA67-7583-4FC9-AFC6-36B7DA41B612}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FCF8EA67-7583-4FC9-AFC6-36B7DA41B612}.Debug|Win32.Build.0 = Debug|Win32
+		{FCF8EA67-7583-4FC9-AFC6-36B7DA41B612}.Release|Win32.ActiveCfg = Release|Win32
+		{FCF8EA67-7583-4FC9-AFC6-36B7DA41B612}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

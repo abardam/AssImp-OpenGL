@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B61FFE06-5714-492B-9BA3-5CD8D45931D3}</ProjectGuid>
+    <RootNamespace>AssimpOpenGLTest</RootNamespace>
+    <ProjectName>AssimpOpenGL</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\AssImp.props" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\GLUT.props" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\OpenCV_debug.props" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\CvDraw_debug.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\AssImp.props" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\GLUT.props" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\OpenCV.props" />
+    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\CvDraw.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>G:\code\AssimpOpenGL-x86-vs12\lib</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>G:\code\AssimpOpenGL-x86-vs12\lib</OutDir>
+    <TargetName>$(ProjectName)d</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>copy /y "G:\Visual Studio 2013\AssimpOpenGLTest\AssimpOpenGLTest\*.h" "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include"</Command>
+      <Message>Copy header files to new directory</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent>
+      <Command>copy /y "G:\Visual Studio 2013\AssimpOpenGLTest\AssimpOpenGLTest\*.h" "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Copy header files to new directory</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="AssimpCV.cpp" />
+    <ClCompile Include="AssimpGLDraw.cpp" />
+    <ClCompile Include="AssimpGLSkeleton.cpp" />
+    <ClCompile Include="AssimpGLSkin.cpp" />
+    <ClCompile Include="AssimpGLUtil.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AssimpCV.h" />
+    <ClInclude Include="AssimpGLDraw.h" />
+    <ClInclude Include="AssimpGLSkeleton.h" />
+    <ClInclude Include="AssimpGLSkin.h" />
+    <ClInclude Include="AssimpGLUtil.h" />
+    <ClInclude Include="AssimpOpenGL.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

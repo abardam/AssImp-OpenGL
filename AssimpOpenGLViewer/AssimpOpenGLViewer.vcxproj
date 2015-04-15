@@ -33,19 +33,19 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\AssImp.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\GLUT.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\OpenCV_debug.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\CvDraw_debug.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\CvSkeleton_debug.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\AssImp.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\GLUT.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\OpenCV_debug.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\CvDraw_debug.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\CvSkeleton_debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\AssImp.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\GLUT.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\OpenCV.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\CvDraw.props" />
-    <Import Project="C:\Users\fabian-d\Documents\Visual Studio 2013\Projects\PROPERTY SHEETS\CvSkeleton.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\AssImp.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\GLUT.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\OpenCV.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\CvDraw.props" />
+    <Import Project="$(PROPERTY_SHEETS_DIR)\CvSkeleton.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

@@ -50,10 +50,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>G:\code\AssimpOpenGL-x86-vs12\lib</OutDir>
+    <OutDir>$(CODE_DIR)\AssimpOpenGL-x86-vs12\lib</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>G:\code\AssimpOpenGL-x86-vs12\lib</OutDir>
+    <OutDir>$(CODE_DIR)\AssimpOpenGL-x86-vs12\lib</OutDir>
     <TargetName>$(ProjectName)d</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -67,7 +67,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PreBuildEvent>
-      <Command>copy /y "G:\Visual Studio 2013\AssimpOpenGLTest\AssimpOpenGLTest\*.h" "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include"</Command>
+      <Command>mkdir "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include" &amp; copy /y "$(ProjectDir)\*.h" "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include"</Command>
       <Message>Copy header files to new directory</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
@@ -86,7 +86,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>copy /y "G:\Visual Studio 2013\AssimpOpenGLTest\AssimpOpenGLTest\*.h" "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include"</Command>
+      <Command>mkdir "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include" &amp; copy /y "$(ProjectDir)\*.h" "$(CODE_DIR)\AssimpOpenGL-x86-vs12\include"</Command>
     </PreBuildEvent>
     <PreBuildEvent>
       <Message>Copy header files to new directory</Message>

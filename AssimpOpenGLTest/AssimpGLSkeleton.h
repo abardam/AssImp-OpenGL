@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include <assimp/scene.h>
+#include <cv_skeleton.h>
 
 typedef std::map<std::string, aiNode*> NodeMap;
 typedef std::pair<std::string, aiNode*> NodeEntry;
@@ -43,110 +44,7 @@ struct BoneInfo{
 };
 
 
-struct BodyPartDefinition{
-	std::string mNode1Name;
-	std::string mNode2Name;
-
-	float mNode1Offset[3];
-	float mNode2Offset[3];
-
-	std::string mBodyPartName;
-	float mColor[3];
-	
-	BodyPartDefinition(std::string name, std::string n1, std::string n2, float * color, float * n1o=0, float * n2o=0) :
-		mBodyPartName(name),
-		mNode1Name(n1),
-		mNode2Name(n2){
-		mColor[0] = color[0];
-		mColor[1] = color[1];
-		mColor[2] = color[2];
-
-		if (n1o == 0){
-			mNode1Offset[0] = 0;
-			mNode1Offset[1] = 0;
-			mNode1Offset[2] = 0;
-		}
-		else{
-			mNode1Offset[0] = n1o[0];
-			mNode1Offset[1] = n1o[1];
-			mNode1Offset[2] = n1o[2];
-		}
-
-		if (n2o == 0){
-			mNode2Offset[0] = 0;
-			mNode2Offset[1] = 0;
-			mNode2Offset[2] = 0;
-		}
-		else{
-			mNode2Offset[0] = n2o[0];
-			mNode2Offset[1] = n2o[1];
-			mNode2Offset[2] = n2o[2];
-		}
-	}
-
-	BodyPartDefinition(std::string name, std::string n1, std::string n2, float r, float g, float b, float * n1o=0, float * n2o=0) :
-		mBodyPartName(name),
-		mNode1Name(n1),
-		mNode2Name(n2){
-		mColor[0] = r;
-		mColor[1] = g;
-		mColor[2] = b;
-
-		if (n1o == 0){
-			mNode1Offset[0] = 0;
-			mNode1Offset[1] = 0;
-			mNode1Offset[2] = 0;
-		}
-		else{
-			mNode1Offset[0] = n1o[0];
-			mNode1Offset[1] = n1o[1];
-			mNode1Offset[2] = n1o[2];
-		}
-
-		if (n2o == 0){
-			mNode2Offset[0] = 0;
-			mNode2Offset[1] = 0;
-			mNode2Offset[2] = 0;
-		}
-		else{
-			mNode2Offset[0] = n2o[0];
-			mNode2Offset[1] = n2o[1];
-			mNode2Offset[2] = n2o[2];
-		}
-	}
-
-	BodyPartDefinition(std::string name, std::string n1, std::string n2) :
-		mBodyPartName(name),
-		mNode1Name(n1),
-		mNode2Name(n2){
-		mColor[0] = 1;
-		mColor[1] = 1;
-		mColor[2] = 1;
-
-		mNode1Offset[0] = 0;
-		mNode1Offset[1] = 0;
-		mNode1Offset[2] = 0;
-		mNode2Offset[0] = 0;
-		mNode2Offset[1] = 0;
-		mNode2Offset[2] = 0;
-	}
-
-	BodyPartDefinition(){
-		mColor[0] = 1;
-		mColor[1] = 1;
-		mColor[2] = 1;
-
-		mNode1Offset[0] = 0;
-		mNode1Offset[1] = 0;
-		mNode1Offset[2] = 0;
-		mNode2Offset[0] = 0;
-		mNode2Offset[1] = 0;
-		mNode2Offset[2] = 0;
-	}
-};
-
 typedef std::vector<BodyPart> BodyPartVector;
-typedef std::vector<BodyPartDefinition> BodyPartDefinitionVector;
 
 void necessityParent(aiNode * node, NecessityMap * nmap, std::string target, std::string target2);
 

@@ -1,7 +1,6 @@
 #include "AssimpGLSkeleton.h"
 
 
-
 void necessityParent(aiNode * node, NecessityMap * nmap, std::string target, std::string target2){
 	nmap->insert(NecessityEntry(node->mName.C_Str(), true));
 	if (node->mName.C_Str() != target &&

@@ -3,28 +3,6 @@
 #include "AssimpGLSkin.h"
 #include "cv_skeleton.h"
 
-//function for saving input frames
-bool save_input_frame(
-	const std::string& filename,
-	const double& time,
-	const cv::Mat& camera_pose,
-	const float& win_width,
-	const float& win_height,
-	const float& fovy,
-	const SkeletonNodeHard& snh,
-	const cv::Mat& color,
-	const cv::Mat& depth);
-
-//function for loading input frames
-bool load_input_frame(
-	const std::string& filename,
-	double& time,
-	cv::Mat& camera_pose,
-	cv::Mat& camera_matrix,
-	SkeletonNodeHard& snh,
-	cv::Mat& color,
-	cv::Mat& depth);
-
 SkeletonNodeHard hard_skeleton(SkeletonNode * node);
 
 //converts from openGL depth (-1, 1) to true depth

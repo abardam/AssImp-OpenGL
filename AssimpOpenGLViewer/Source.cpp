@@ -42,11 +42,11 @@ int main(int argc, char * argv[]){
 			break;
 		}
 
-		cv_draw_and_build_skeleton(&snh, camera_extrinsic, camera_intrinsic, &snhMap, colorMat);
+		cv_draw_and_build_skeleton(&snh, cv::Mat::eye(4,4,CV_32F), camera_intrinsic, camera_extrinsic, &snhMap, colorMat);
 		for (auto it = bpdv.begin(); it != bpdv.end(); ++it){
 			cv::Scalar color(it->mColor[2] * 255, it->mColor[1] * 255, it->mColor[0] * 255);
 			float length;
-			cv::Mat volume_transform = get_bodypart_transform(*it, snhMap, &camera_extrinsic, &length);
+			cv::Mat volume_transform = get_bodypart_transform(*it, snhMap, camera_extrinsic, &length);
 			cv_draw_volume(color, volume_transform, length, 1, 1, colorMat, camera_extrinsic, camera_intrinsic);
 		}
 		//cv_draw_volume(bpdv[3], colorMat, camera_intrinsic, snhMap);

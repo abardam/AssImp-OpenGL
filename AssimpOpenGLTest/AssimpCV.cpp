@@ -1,14 +1,16 @@
 #include "AssimpCV.h"
 #include <cv_draw_cylinder.h>
 
-SkeletonNodeHard hard_skeleton(SkeletonNode * node){
+SkeletonNodeHard hard_skeleton(SkeletonNode * node, const cv::Mat& parent_transform_absolute){
 	SkeletonNodeHard hard_node;
-	hard_node.mTransformation = cv::Mat(4, 4, CV_32F, &(node->mNode->mTransformation.a1));
+	//hard_node.mTransformation = cv::Mat(4, 4, CV_32F, &(node->mNode->mTransformation.a1));
+	cv::Mat node_transform = cv::Mat(4, 4, CV_32F, &(node->mNode->mTransformation.a1));
+	hard_node.mTransformation = parent_transform_absolute * node_transform * parent_transform_absolute.inv();
 	hard_node.mName = node->mNode->mName.C_Str();
 	hard_node.mParentName = node->mParent ? node->mParent->mNode->mName.C_Str() : "";
 
 	for (auto it = node->mChildren.begin(); it != node->mChildren.end(); ++it){
-		hard_node.mChildren.push_back(hard_skeleton(*it));
+		hard_node.mChildren.push_back(hard_skeleton(*it, hard_node.mTransformation * parent_transform_absolute));
 	}
 
 	return hard_node;
@@ -115,7 +117,7 @@ void cv_draw_bodypart_cylinder(const BodyPartDefinition& bpd, cv::Mat& image, co
 	cv::Vec3b color(color_b, color_g, color_r);
 
 	float length;
-	cv::Mat volume_transform = get_bodypart_transform(bpd, snhMap, &camera_pose, &length);
+	cv::Mat volume_transform = get_bodypart_transform(bpd, snhMap, camera_pose, &length);
 
 	cv_draw_cylinder(image, X_SIDE_LENGTH, Z_SIDE_LENGTH, length, 8, volume_transform, camera_matrix, color);
 }
@@ -125,22 +127,14 @@ void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, co
 	X_SIDE_LENGTH /= 2;
 	Z_SIDE_LENGTH /= 2;
 	
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
-		color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),	color);
 
 	//cv::line(image,
 	//	project2D(vertex(child_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
@@ -176,37 +170,20 @@ void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, co
 	//	project2D(vertex(child_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
 	//	color);
 
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
-		color);
-
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
-		color);
-	cv::line(image,
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
-		project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
-		color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),	color);
+	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
+					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),	color);
 }

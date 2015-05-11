@@ -3,7 +3,8 @@
 #include "AssimpGLSkin.h"
 #include "cv_skeleton.h"
 
-SkeletonNodeHard hard_skeleton(SkeletonNode * node);
+//also converts from AssImp order (parent * child) to GHOST order (child * parent)
+SkeletonNodeHard hard_skeleton(SkeletonNode * node, const cv::Mat& parent_transform_absolute);
 
 //converts from openGL depth (-1, 1) to true depth
 cv::Mat depth_to_z(cv::Mat& depth, const cv::Mat& OPENGL_PROJECTION_MATRIX);

@@ -33,6 +33,8 @@
 
 #include "AssimpCV.h"
 
+//create idrectory
+#include <Windows.h>
 
 /* the global Assimp scene object */
 const  aiScene* scene = NULL;
@@ -84,9 +86,11 @@ bool mouse_down = false;
 bool auto_rotate = true;
 
 float current_matrix[16];
+cv::Mat modelview_matrix, modelview_matrix_rotpt;
 
-#define ZOOM_VALUE 0.1
-#define ROTATE_VALUE 1
+#define ZOOM_VALUE 0.01
+#define BIG_ZOOM_VALUE 0.1
+#define ROTATE_VALUE 0.001
 
 //saving
 
@@ -226,10 +230,12 @@ void mouseFunc(int button, int state, int x, int y){
 			mouse_x = x;
 			mouse_y = y;
 			mouse_down = true;
+			modelview_matrix_rotpt = modelview_matrix.clone();
 		}
 		else if (state == GLUT_UP){
 			mouse_down = false;
 			glGetFloatv(GL_MODELVIEW_MATRIX, current_matrix);
+			//modelview_matrix = modelview_matrix_rotpt.clone();
 			angle_x = 0;
 			angle_y = 0;
 		}
@@ -250,13 +256,20 @@ void mouseMoveFunc(int x, int y){
 		angle_x = (x - mouse_x) * ROTATE_VALUE;
 		angle_y = (y - mouse_y) * ROTATE_VALUE;
 		auto_rotate = false;
+
+		cv::Mat rot_tmp = cv::Mat::eye(4,4,CV_32F);
+		cv::Rodrigues(cv::Vec3f(angle_y, angle_x, 0), rot_tmp(cv::Range(0,3),cv::Range(0,3)));
+
+		modelview_matrix = rot_tmp * modelview_matrix_rotpt;
+
 	}
 }
 
 void keyboardFunc(unsigned char key, int x, int y){
+	cv::Mat trans_tmp = cv::Mat::eye(4, 4, CV_32F);
 	switch (key){
-	case 'S':
-	case 's':
+	case 'K':
+	case 'k':
 		//show skeleton
 		show_skeleton = !show_skeleton;
 		break;
@@ -271,12 +284,66 @@ void keyboardFunc(unsigned char key, int x, int y){
 	case 't':
 		real_time = !real_time;
 		break;
-	case 'Q':
-	case 'q':
-		break;
 	case 'P':
 	case 'p':
 		playing = !playing;
+		break;
+	//case 'A':
+	//case 'a':
+	//	zoom += ZOOM_VALUE;
+	//	break;
+	//case 'Z':
+	//case 'z':
+	//	zoom -= ZOOM_VALUE;
+	//	if (zoom < ZOOM_VALUE) zoom = ZOOM_VALUE;
+	//	break;
+	case 'W':
+		trans_tmp.ptr<float>(2)[3] = BIG_ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'w':
+		trans_tmp.ptr<float>(2)[3] = ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'S':
+		trans_tmp.ptr<float>(2)[3] = -BIG_ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 's':
+		trans_tmp.ptr<float>(2)[3] = -ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'A':
+		trans_tmp.ptr<float>(0)[3] = BIG_ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'a':
+		trans_tmp.ptr<float>(0)[3] = ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'D':
+		trans_tmp.ptr<float>(0)[3] = -BIG_ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'd':
+		trans_tmp.ptr<float>(0)[3] = -ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'Q':
+		trans_tmp.ptr<float>(1)[3] = -BIG_ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'q':
+		trans_tmp.ptr<float>(1)[3] = -ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;		
+		break;
+	case 'E':
+		trans_tmp.ptr<float>(1)[3] = BIG_ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
+		break;
+	case 'e':
+		trans_tmp.ptr<float>(1)[3] = ZOOM_VALUE;
+		modelview_matrix = trans_tmp * modelview_matrix;
 		break;
 	}
 }
@@ -307,32 +374,34 @@ void display(void)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 
-	if (auto_rotate){
-		gluLookAt(0.f, 0.f, 3.f, 0.f, 0.f, -5.f, 0.f, 1.f, 0.f);
-		/* rotate it around the y axis */
-		glRotatef(angle, 0.f, 1.f, 0.f);
-		/* scale the whole asset to fit into our view frustum */
-		tmp = scene_max.x - scene_min.x;
-		tmp = aisgl_max(scene_max.y - scene_min.y, tmp);
-		tmp = aisgl_max(scene_max.z - scene_min.z, tmp);
-		tmp = 1.f / tmp;
-		glScalef(tmp, tmp, tmp);
-		/* center the model */
-		glTranslatef(-scene_center.x, -scene_center.y, -scene_center.z);
+	//if (auto_rotate){
+	//	gluLookAt(0.f, 0.f, 3.f, 0.f, 0.f, -5.f, 0.f, 1.f, 0.f);
+	//	/* rotate it around the y axis */
+	//	glRotatef(angle, 0.f, 1.f, 0.f);
+	//	/* scale the whole asset to fit into our view frustum */
+	//	tmp = scene_max.x - scene_min.x;
+	//	tmp = aisgl_max(scene_max.y - scene_min.y, tmp);
+	//	tmp = aisgl_max(scene_max.z - scene_min.z, tmp);
+	//	tmp = 1.f / tmp;
+	//	glScalef(tmp, tmp, tmp);
+	//	/* center the model */
+	//	glTranslatef(-scene_center.x, -scene_center.y, -scene_center.z);
+	//
+	//	glGetFloatv(GL_MODELVIEW_MATRIX, current_matrix);
+	//}
+	//else{
+	//	glMultMatrixf(current_matrix);
+	//
+	//	glRotatef(angle_x, 0.f, 1.f, 0.f);
+	//	glRotatef(angle_y, 1.f, 0.f, 0.f);
+	//
+	//	glScalef(zoom, zoom, zoom);
+	//
+	//}
+	cv::Mat modelview_matrix_t = modelview_matrix.t();
+	glMultMatrixf(modelview_matrix_t.ptr<float>());
 
-		glGetFloatv(GL_MODELVIEW_MATRIX, current_matrix);
-	}
-	else{
-		glMultMatrixf(current_matrix);
-
-		glRotatef(angle_x, 0.f, 1.f, 0.f);
-		glRotatef(angle_y, 1.f, 0.f, 0.f);
-
-		glScalef(zoom, zoom, zoom);
-
-	}
-
-	SkeletonNodeHard snh = hard_skeleton(gSkeletonRoot);
+	SkeletonNodeHard snh = hard_skeleton(gSkeletonRoot, cv::Mat::eye(4,4,CV_32F));
 
 	recursive_render(scene, scene->mRootNode, &gMeshMap, &gTextureIDMap, &gVertexBoneVector, &gBoneInfoVector);
 	
@@ -449,6 +518,8 @@ int main(int argc, char **argv)
 	if (argc < 3) return 0;
 	savepath = argv[2];
 
+	CreateDirectory(savepath.c_str(), NULL);
+
 	aiLogStream stream;
 
 	win_width = 600;
@@ -514,16 +585,16 @@ int main(int argc, char **argv)
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER ARM LEFT",  "forearm.L", "hand.L", 0.8, 0.8, 0.5));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER ARM RIGHT", "forearm.R", "hand.R", 0.5, 0.8, 0.8));
 		
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("HAND LEFT",  "hand.L", "f_middle.03.L", 0.7, 0.7, 0.1, 0, hand_offset));
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("HAND RIGHT", "hand.R", "f_middle.03.R", 0.1, 0.7, 0.7, 0, hand_offset));
+		//gBodyPartDefinitionVector.push_back(BodyPartDefinition("HAND LEFT",  "hand.L", "f_middle.03.L", 0.7, 0.7, 0.1, 0, hand_offset));
+		//gBodyPartDefinitionVector.push_back(BodyPartDefinition("HAND RIGHT", "hand.R", "f_middle.03.R", 0.1, 0.7, 0.7, 0, hand_offset));
 
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER LEG LEFT",  "thigh.L", "shin.L", 0.5, 0.8, 0.2));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER LEG RIGHT", "thigh.R", "shin.R", 0.2, 0.8, 0.5));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER LEG LEFT",  "shin.L", "foot.L", 0.8, 0.5, 0.2, extend_offset_small1, 0));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER LEG RIGHT", "shin.R", "foot.R", 0.2, 0.5, 0.8, extend_offset_small1, 0));
 
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("FOOT LEFT",  "foot.L", "toe.L", 0.9, 0.6, 0.3, 0, foot_offset));
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("FOOT RIGHT", "foot.R", "toe.R", 0.3, 0.6, 0.9, 0, foot_offset));
+		//gBodyPartDefinitionVector.push_back(BodyPartDefinition("FOOT LEFT",  "foot.L", "toe.L", 0.9, 0.6, 0.3, 0, foot_offset));
+		//gBodyPartDefinitionVector.push_back(BodyPartDefinition("FOOT RIGHT", "foot.R", "toe.R", 0.3, 0.6, 0.9, 0, foot_offset));
 	}
 
 	std::stringstream bpdSS;
@@ -563,6 +634,8 @@ int main(int argc, char **argv)
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_DIFFUSE);
 
+
+	modelview_matrix = cv::Mat::eye(4, 4, CV_32F);
 	glutGet(GLUT_ELAPSED_TIME);
 	glutMainLoop();
 

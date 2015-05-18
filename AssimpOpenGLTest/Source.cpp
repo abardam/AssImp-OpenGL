@@ -32,6 +32,8 @@
 #include <opencv2\opencv.hpp>
 
 #include "AssimpCV.h"
+#include <glcv.h>
+#include <cv_draw_common.h>
 
 //create idrectory
 #include <Windows.h>
@@ -565,23 +567,23 @@ int main(int argc, char **argv)
 
 	{
 		//init body part definitions
-		float head_offset[] = { 0, 0, 0.5 };
-		float head_offset2[] = { 0, 2, 0.5 };
-		float abs_offset[] = { 0, -1, 0 };
-		float hand_offset[] = { 0, 0.5, 0 };
-		float foot_offset[] = { 0, 0.5, 0 };
-		float extend_offset1[] = { 0, -1, 0 };
-		float extend_offset2[] = { 0, 1, 0 };
-		float extend_offset_small1[] = { 0, -0.5, 0 };
-		float extend_offset_small2[] = { 0, 0.5, 0 };
+		cv::Mat head_offset = create_translation_mat(cv::Vec3f( 0, 0, 0.5 ));
+		cv::Mat head_offset2 = create_translation_mat(cv::Vec3f( 0, 2, 0.5 ));
+		cv::Mat abs_offset = create_translation_mat(cv::Vec3f( 0, -1, 0 ));
+		cv::Mat hand_offset = create_translation_mat(cv::Vec3f( 0, 0.5, 0 ));
+		cv::Mat foot_offset = create_translation_mat(cv::Vec3f( 0, 0.5, 0 ));
+		cv::Mat extend_offset1 = create_translation_mat(cv::Vec3f( 0, -1, 0 ));
+		cv::Mat extend_offset2 = create_translation_mat(cv::Vec3f( 0, 1, 0 ));
+		cv::Mat extend_offset_small1 = create_translation_mat(cv::Vec3f( 0, -0.5, 0 ));
+		cv::Mat extend_offset_small2 = create_translation_mat(cv::Vec3f( 0, 0.5, 0 ));
 
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("ABS", "hips", "chest", 0.2, 0.2, 0.8, abs_offset, 0));
+		gBodyPartDefinitionVector.push_back(BodyPartDefinition("ABS", "hips", "chest", 0.2, 0.2, 0.8, abs_offset));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("CHEST", "chest", "neck", 0.2, 0.8, 0.2));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("HEAD", "neck", "head", 0.8, 0.2, 0.2, head_offset, head_offset2));
 
 
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER ARM LEFT", "upper_arm.L", "forearm.L", 0.8, 0.8, 0.2, extend_offset1, 0));
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER ARM RIGHT", "upper_arm.R", "forearm.R", 0.2, 0.8, 0.8, extend_offset1, 0));
+		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER ARM LEFT", "upper_arm.L", "forearm.L", 0.8, 0.8, 0.2, extend_offset1));
+		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER ARM RIGHT", "upper_arm.R", "forearm.R", 0.2, 0.8, 0.8, extend_offset1));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER ARM LEFT",  "forearm.L", "hand.L", 0.8, 0.8, 0.5));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER ARM RIGHT", "forearm.R", "hand.R", 0.5, 0.8, 0.8));
 		
@@ -590,8 +592,8 @@ int main(int argc, char **argv)
 
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER LEG LEFT",  "thigh.L", "shin.L", 0.5, 0.8, 0.2));
 		gBodyPartDefinitionVector.push_back(BodyPartDefinition("UPPER LEG RIGHT", "thigh.R", "shin.R", 0.2, 0.8, 0.5));
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER LEG LEFT",  "shin.L", "foot.L", 0.8, 0.5, 0.2, extend_offset_small1, 0));
-		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER LEG RIGHT", "shin.R", "foot.R", 0.2, 0.5, 0.8, extend_offset_small1, 0));
+		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER LEG LEFT",  "shin.L", "foot.L", 0.8, 0.5, 0.2, extend_offset_small1));
+		gBodyPartDefinitionVector.push_back(BodyPartDefinition("LOWER LEG RIGHT", "shin.R", "foot.R", 0.2, 0.5, 0.8, extend_offset_small1));
 
 		//gBodyPartDefinitionVector.push_back(BodyPartDefinition("FOOT LEFT",  "foot.L", "toe.L", 0.9, 0.6, 0.3, 0, foot_offset));
 		//gBodyPartDefinitionVector.push_back(BodyPartDefinition("FOOT RIGHT", "foot.R", "toe.R", 0.3, 0.6, 0.9, 0, foot_offset));

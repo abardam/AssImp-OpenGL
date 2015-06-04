@@ -87,7 +87,7 @@ void cv_draw_bodypart_cylinder(const BodyPartDefinition& bpd, cv::Mat& image, co
 	cv_draw_cylinder(image, X_SIDE_LENGTH, Z_SIDE_LENGTH, length, 8, volume_transform, camera_matrix, color);
 }
 
-void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, const float& length, float X_SIDE_LENGTH, float Z_SIDE_LENGTH, cv::Mat& image, const cv::Mat& external_parameters, const cv::Mat& camera_matrix){
+void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, const float& length, float X_SIDE_LENGTH, float Z_SIDE_LENGTH, cv::Mat& image, const cv::Mat& external_parameters, const cv::Mat& camera_matrix, bool draw_axis){
 
 	X_SIDE_LENGTH /= 2;
 	Z_SIDE_LENGTH /= 2;
@@ -151,4 +151,13 @@ void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, co
 					project2D(vertex(volume_transform, cv::Vec4f(-X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),	color);
 	cv::line(image,	project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, 0, -Z_SIDE_LENGTH)), camera_matrix),
 					project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH, length, -Z_SIDE_LENGTH)), camera_matrix),	color);
+
+	if (draw_axis){
+		cv::line(image, project2D(vertex(volume_transform, cv::Vec4f(0, 0, 0)), camera_matrix),
+						project2D(vertex(volume_transform, cv::Vec4f(X_SIDE_LENGTH/2, 0, 0)), camera_matrix), cv::Scalar(0,0,0xff));
+		cv::line(image, project2D(vertex(volume_transform, cv::Vec4f(0, 0, 0)), camera_matrix),
+						project2D(vertex(volume_transform, cv::Vec4f(0, length/2, 0)), camera_matrix), cv::Scalar(0,0xff,0));
+		cv::line(image, project2D(vertex(volume_transform, cv::Vec4f(0, 0, 0)), camera_matrix),
+						project2D(vertex(volume_transform, cv::Vec4f(0, 0, Z_SIDE_LENGTH/2)), camera_matrix), cv::Scalar(0xff,0,0));
+	}
 }

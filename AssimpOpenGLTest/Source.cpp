@@ -437,7 +437,7 @@ void display(void)
 		filename.str("");
 		filename<< savepath << file_no << ".xml.gz";
 
-		save_input_frame(filename.str(), time, camera_extrinsic, win_width, win_height, fovy, snh, colorMatFlipped, depthMatFlipped);
+		save_input_frame(filename.str(), time, camera_extrinsic, win_width, win_height, fovy, snh, colorMatFlipped, depthMatFlipped, FACING_FRONT);
 
 		++file_no;
 

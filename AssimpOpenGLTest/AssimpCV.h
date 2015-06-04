@@ -16,4 +16,4 @@ cv::Mat depth_to_HSV(const cv::Mat& depth);
 cv::Vec4f vertex(const cv::Mat& transform, const cv::Vec4f& local_vertex);
 
 void cv_draw_bodypart_cylinder(const BodyPartDefinition& bpd, cv::Mat& image, const cv::Mat& camera_pose, const cv::Mat& camera_matrix, const SkeletonNodeHardMap& snhMap);
-void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, const float& Y_SIDE_LENGTH, float X_SIDE_LENGTH, float Z_SIDE_LENGTH, cv::Mat& image, const cv::Mat& external_parameters, const cv::Mat& camera_matrix);
+void cv_draw_volume(const cv::Scalar& color, const cv::Mat& volume_transform, const float& Y_SIDE_LENGTH, float X_SIDE_LENGTH, float Z_SIDE_LENGTH, cv::Mat& image, const cv::Mat& external_parameters, const cv::Mat& camera_matrix, bool draw_axis = false);

@@ -35,10 +35,11 @@ int main(int argc, char * argv[]){
 		fs.open(filenameSS.str(), cv::FileStorage::READ);
 
 		double time;
+		int facing;
 		SkeletonNodeHard snh;
 		cv::Mat depthMat;
 
-		if (!load_input_frame(filenameSS.str(), time, camera_extrinsic, camera_intrinsic, snh, colorMat, depthMat)) {
+		if (!load_input_frame(filenameSS.str(), time, camera_extrinsic, camera_intrinsic, snh, colorMat, depthMat, facing)) {
 			break;
 		}
 
